@@ -137,3 +137,5 @@ dmypy.json
 # add secret keys or API keys here
 configs/secrets.yaml
 
+multi_agent/sequential_agent/sub_agents/demand1.csv
+multi_agent/sequential_agent/sub_agents/output_with_technical_skills.csv
