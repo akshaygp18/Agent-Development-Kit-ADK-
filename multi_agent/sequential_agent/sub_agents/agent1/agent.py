@@ -8,7 +8,7 @@ import re
 import os
 import csv
 
-def extract_and_save_technical_skills():
+def extract_raw_technical_skills():
     """
     Extracts the technical skills section from job descriptions in a CSV file and saves the output.
 
@@ -23,7 +23,7 @@ def extract_and_save_technical_skills():
     Returns:
         str: The full path to the saved CSV file containing the extracted technical skills.
     """
-    df = pd.read_csv("../demand1.csv")
+    df = pd.read_csv("sequential_agent/sub_agents/demand1.csv")
 
     df['technical_skills'] = df['jdkeyword_Desc'].apply(
         lambda text: (
@@ -70,23 +70,13 @@ def extract_and_save_technical_skills():
 GEMINI_MODEL = "gemini-2.0-flash"
 
 # Create the recommender agent
-root_agent = Agent(
+rawskill_extraction_agent = LlmAgent(
     name="Rawskill_extraction_Agent",
     model=GEMINI_MODEL,
-    instruction="""You are a Raw Skill Extraction AI agent.
-
-Your goal is to extract **only the technical skills** mentioned in the given job description text.
-Do not include soft skills, responsibilities, or generic qualifications. Focus on tools, technologies,
-programming languages, frameworks, cloud platforms, etc.
-
-Format your output as a **comma-separated list** of skills.
-
-Job Description:
-{jdkeyword_Desc}
-    """,
-    description="Extracts technical skills from job descriptions.",
-    tools=[extract_and_save_technical_skills],
+    instruction="You are a Raw Skill Extraction AI agent.",
+    description="Extracts technical skills.",
+    tools=[extract_raw_technical_skills],
+    output_key="technical_skills",
     
 )
 
-# output_key="technical_skills",

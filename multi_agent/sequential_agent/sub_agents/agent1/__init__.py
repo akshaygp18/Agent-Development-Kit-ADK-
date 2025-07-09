@@ -1,1 +1,1 @@
-from . import agent
+from .agent import rawskill_extraction_agent
